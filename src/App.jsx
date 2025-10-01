@@ -1,36 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import ProductCard from './components/productCard'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import ProductCard from "./components/productCard";
+import Header from "./components/header";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
+      <div className="border w-[600px] h-[600px] bg-gray-400 relative">
 
-      <ProductCard 
-        name="Laptop"
-        price="100,000" 
-        image="https://tse3.mm.bing.net/th/id/OIP.L12A9cgd7dCHFZFd8BTPKwHaHZ?rs=1&pid=ImgDetMain&o=7&rm=3" 
-      />
+        <div className="w-[500px] h-[500px] bg-yellow-100 flex flex-col items-center justify-center">
 
-      <ProductCard 
-        name="Phone" 
-        price="70,000" 
-        image="https://tse2.mm.bing.net/th/id/OIP.BQhwKHwVYvkFSiV6jwk_RAHaHj?rs=1&pid=ImgDetMain&o=7&rm=3"
-      />
+          <div className="w-[100px] h-[100px] bg-blue-600"></div>
 
-      <ProductCard 
-        name="Watch" 
-        price="5,000" 
-        image="https://tse2.mm.bing.net/th/id/OIP.8Js70CPlVBwuwX8HTrJBfAHaG6?rs=1&pid=ImgDetMain&o=7&rm=3"
-      />
+          <div className="w-[100px] h-[100px] bg-red-600 fixed left-[550px] top-[550px]"></div>
 
+          <div className="w-[100px] h-[100px] bg-green-600"></div>
 
+          <div className="w-[100px] h-[100px] absolute right-[80px] bottom-[80px] bg-pink-600"></div>
+
+        </div>
+        
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
