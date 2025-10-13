@@ -4,27 +4,39 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import ProductCard from "./components/productCard";
 import Header from "./components/header";
+import Test from "./components/test";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/homePage";
+import LoginPage from "./pages/loginPage";
+import AdminPage from "./pages/adminPage";
+import RegisterPage from "./pages/registerPage";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <div className="border w-[600px] h-[600px] bg-gray-400 relative">
+    {/* Browser router from npm install react-router-dom */}
+      <BrowserRouter> 
+        <div className="w-full h-screen bg-primary text-secondary">  
 
-        <div className="w-[500px] h-[500px] bg-yellow-100 flex flex-col items-center justify-center">
+            <Routes path="/">
 
-          <div className="w-[100px] h-[100px] bg-blue-600"></div>
+              {/* <Route path="/" element={<h1>Home Page</h1>}/>  
+              <Route path="/login" element={<h1>Login</h1>}/>
+              <Route path="/register" element={<h1>Register</h1>}/> 
+              <Route path="/admin" element={<h1>Admin</h1>}/> */}
 
-          <div className="w-[100px] h-[100px] bg-red-600 fixed left-[550px] top-[550px]"></div>
+              <Route path="/" element={<HomePage/>}/> 
+              <Route path="/login" element={<LoginPage/>}/>
+              <Route path="/register" element={<RegisterPage/>}/>
+              <Route path="/admin" element={<AdminPage/>}/> 
 
-          <div className="w-[100px] h-[100px] bg-green-600"></div>
+            </Routes>
 
-          <div className="w-[100px] h-[100px] absolute right-[80px] bottom-[80px] bg-pink-600"></div>
 
         </div>
-        
-      </div>
+      </BrowserRouter>
     </>
   );
 }
