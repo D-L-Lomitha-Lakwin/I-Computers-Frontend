@@ -10,31 +10,23 @@ import HomePage from "./pages/homePage";
 import LoginPage from "./pages/loginPage";
 import AdminPage from "./pages/adminPage";
 import RegisterPage from "./pages/registerPage";
+import TestPage from "./pages/test";
 
 function App() {
   const [count, setCount] = useState(0);
 
-  return (
+  return ( 
     <>
-    {/* Browser router from npm install react-router-dom */}
+      {/* Browser router from npm install react-router-dom */}
       <BrowserRouter> 
-        <div className="w-full h-screen bg-primary text-secondary">  
-
-            <Routes path="/">
-
-              {/* <Route path="/" element={<h1>Home Page</h1>}/>  
-              <Route path="/login" element={<h1>Login</h1>}/>
-              <Route path="/register" element={<h1>Register</h1>}/> 
-              <Route path="/admin" element={<h1>Admin</h1>}/> */}
-
-              <Route path="/" element={<HomePage/>}/> 
-              <Route path="/login" element={<LoginPage/>}/>
-              <Route path="/register" element={<RegisterPage/>}/>
-              <Route path="/admin" element={<AdminPage/>}/> 
-
-            </Routes>
-
-
+        <div className="w-full h-screen bg-primary text-secondary">
+          <Routes path="/">
+            <Route path="/*" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/admin/*" element={<AdminPage />} /> {/*  "/admin/*"  = means all (*) subroutes of admin will be handled by admin page */}
+            <Route path="/test" element={<TestPage />}/>
+          </Routes>
         </div>
       </BrowserRouter>
     </>
