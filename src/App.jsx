@@ -11,6 +11,7 @@ import LoginPage from "./pages/loginPage";
 import AdminPage from "./pages/adminPage";
 import RegisterPage from "./pages/registerPage";
 import TestPage from "./pages/test";
+import { Toaster } from "react-hot-toast"; // For Pop Up Alerts / Notifications
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,6 +20,10 @@ function App() {
     <>
       {/* Browser router from npm install react-router-dom */}
       <BrowserRouter> 
+
+      {/* Toaster for user friendly Alerts / Notification Popups */}
+      <Toaster position="top-right"/> 
+
         <div className="w-full h-screen bg-primary text-secondary">
           <Routes path="/">
             <Route path="/*" element={<HomePage />} />

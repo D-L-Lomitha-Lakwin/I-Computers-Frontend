@@ -4,6 +4,7 @@
   --color-primary: #b8cfce; /* background color */
   --color-secondary: #333446; /* text color */
   --color-accent: #1b1a17; /* header color */
+  --color-white: white;
 }
 
 ::-webkit-scrollbar {
