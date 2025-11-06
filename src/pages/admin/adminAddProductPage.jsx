@@ -1,0 +1,277 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineProduct } from "react-icons/ai";
+import toast from "react-hot-toast";
+import axios from "axios";
+
+export default function AdminAddProductsPage() {
+  const [productID, setProductID] = useState("");
+  const [name, setName] = useState("");
+  const [altNames, setAltNames] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [labelledPrice, setLabelledPrice] = useState(0);
+  const [images, setImages] = useState("");
+  const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
+  const [model, setModel] = useState("");
+  const [stock, setStock] = useState(0);
+  const [isAvailable, setIsAvailable] = useState(false);
+
+  const navigate = useNavigate();
+
+  async function addProduct() {
+    const token = localStorage.getItem("token");
+    if (token == null) {
+      toast.error("You must be logged in as admin to add products");
+      navigate("/login");
+      return;
+    }
+
+    if (
+      productID == "" ||
+      name == "" ||
+      description == "" ||
+      price <= 0 ||
+      category == "" ||
+      brand == "" ||
+      model == "" ||
+      stock < 0
+    ) {
+      toast.error("Please fill all the required fields");
+      return;
+    }
+
+    // API call to add product
+    try {
+      const altNamesInArray = altNames.split(","); // Can be multiple alternative names separated by commas
+      const imagesInArray = images.split(",");
+      await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/products/",
+        {
+          productID: productID,
+          name: name,
+          altNames: altNamesInArray,
+          description: description,
+          price: price,
+          labelledPrice: labelledPrice,
+          images: imagesInArray,
+          category: category,
+          brand: brand,
+          model: model,
+          stock: stock,
+          isAvailable: isAvailable,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token 
+          }
+        } 
+      );
+
+      toast.success("Product added successfully");
+      //   navigate("/admin/products");
+    } catch (err) {
+      toast.error("Error adding product, please try again");
+      console.log("Error adding product");
+      console.log(err);
+    }
+  }
+
+  return (
+    <div className="w-full h-full p-[50px] flex justify-center items-start overflow-y-scroll">
+      <div className="w-[800px] bg-accent/80 rounded-2xl p-[40px] overflow-y-visible shadow-2xl">
+        <h1 className="w-full text-xl text-primary mb-[20px] flex  items-center gap-[5px]">
+          <AiOutlineProduct />
+          Add New Product
+        </h1>
+
+        <div className="w-full bg-white p-[20px] flex flex-row flex-wrap justify-between rounded-xl shadow-2xl">
+          {/* Input Set */}
+          <div className="my-[10px] w-[40%]">
+            <label>Product ID</label>
+            <input
+              type="text"
+              value={productID}
+              onChange={(e) => {
+                setProductID(e.target.value);
+              }}
+              className="w-full h-[40px] rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-2 border-accent shadow-accent px-[20px]"
+            ></input>
+            <p className="text-5m text-gray-500 w-full text-right">
+              <i>*Provide a unique product Id</i>
+            </p>
+          </div>
+
+          <div className="my-[10px] w-[40%]">
+            <label>Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              className="w-full h-[40px] rounded-2xl border-2 focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px]"
+            ></input>
+          </div>
+
+          <div className="my-[10px] w-full">
+            <label>Alternative Names</label>
+            <input
+              type="text"
+              value={altNames}
+              onChange={(e) => {
+                setAltNames(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px]"
+            ></input>
+            <p className="text-5m text-gray-500 w-full text-right">
+              <i>*Separate multiple names with commas</i>
+            </p>
+          </div>
+
+          <div className="my-[10px] w-full">
+            <label>Description</label>
+            <textarea
+              type="text"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px] py-[10px]"
+            ></textarea>
+          </div>
+
+          <div className="my-[10px] w-[40%]">
+            <label>Price</label>
+            <input
+              type="number"
+              value={price}
+              onChange={(e) => {
+                setPrice(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px]"
+            ></input>
+          </div>
+
+          <div className="my-[10px] w-[40%]">
+            <label>Labelled Price</label>
+            <input
+              type="number"
+              value={labelledPrice}
+              onChange={(e) => {
+                setLabelledPrice(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px]"
+            ></input>
+          </div>
+
+          <div className="my-[10px] w-full">
+            <label>Images</label>
+            <input
+              type="number"
+              value={images}
+              onChange={(e) => {
+                setImages(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px]"
+            ></input>
+          </div>
+
+          <div className="my-[10px] flex flex-col w-[30%]">
+            <label>Category</label>
+            <select
+              value={category}
+              onChange={(e) => {
+                setCategory(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px]"
+            >
+              <option value="CPU">CPU</option>
+              <option value="Graphic Car">Graphic Card</option>
+              <option value="Motherboards">Motherboards</option>
+              <option value="Power Supplies">Power Supplies</option>
+              <option value="RAM">RAM</option>
+              <option value="Storage Devices">Storage Devices</option>
+              <option value="Cooling Solutions">Cooling Solutions</option>
+              <option value="Computer Cases">Computer Cases</option>
+              <option value="Mouse and Keyboards">Mouse and Keyboards</option>
+              <option value="Accesories">Accesories</option>
+              <option value="Monitors">Monitors</option>
+              <option value="Computers">Computers</option>
+              <option value="Laptops">Laptops</option>
+              <option value="Cables">Cables</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+
+          <div className="my-[10px] w-[30%]">
+            <label>Brand</label>
+            <input
+              type="text"
+              value={brand}
+              onChange={(e) => {
+                setBrand(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px]"
+            ></input>
+          </div>
+
+          <div className="my-[10px] w-[30%]">
+            <label>Model</label>
+            <input
+              type="text"
+              value={model}
+              onChange={(e) => {
+                setModel(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px]"
+            ></input>
+          </div>
+
+          <div className="my-[10px] w-[40%]">
+            <label>Stock</label>
+            <input
+              type="number"
+              value={stock}
+              onChange={(e) => {
+                setStock(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent  border-accent shadow-2xl px-[20px]"
+            ></input>
+          </div>
+
+          <div className="my-[10px] flex flex-col w-[40%]">
+            <label>Available</label>
+            <select
+              value={isAvailable}
+              onChange={(e) => {
+                setIsAvailable(e.target.value);
+              }}
+              className="w-full h-[40px] border-2 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent border-accent shadow-accent shadow-2xl px-[20px]"
+            >
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
+            </select>
+          </div>
+
+          <Link
+            to="/admin/products"
+            className="w-[49%] h-[50px] bg-red-500 text-white font-bold rounded-2xl flex justify-center items-center hover:bg-red-700 border-[2px] mt-[20px]"
+          >
+            Cancel
+          </Link>
+          <button
+            onClick={addProduct}
+            className="w-[49%] h-[50px] bg-accent text-white font-bold  rounded-2xl hover:bg-transparent hover:text-accent border-[2px] border-accent mt-[20px]"
+          >
+            Add Product
+          </button>
+
+          {/* Input Set */}
+        </div>
+      </div>
+      {/* Add Product Page */}
+    </div>
+  );
+}

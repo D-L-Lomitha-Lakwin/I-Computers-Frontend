@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "axios"; 
 import toast from "react-hot-toast";
 
 export default function LoginPage() {
@@ -28,13 +28,18 @@ export default function LoginPage() {
 
     try {
         // import.meta.env.VITE_BACKEND_URL, this is for import backend URL's first section from .env file
-      const res = await axios.post(import.meta.env.VITE_BACKEND_URL + "/users/login", {
+      const res = await axios.post(import.meta.env.VITE_BACKEND_URL + "/users/login", { 
         // Send data to the backend with location
         email: email,
         password: password, 
       });
 
       console.log(res); // To check the response from the backend in the console
+      
+      localStorage.setItem("token", res.data.token) // Store the token in the local storage
+
+      // const token = localStorage.getItem("token"); // Get the token from the local storage
+
 
       if(res.data.role == "admin"){
         // window.location.href = "/admin";
