@@ -70,7 +70,7 @@ export default function AdminAddProductsPage() {
       );
 
       toast.success("Product added successfully");
-      //   navigate("/admin/products");
+        navigate("/admin/products");
     } catch (err) {
       toast.error("Error adding product, please try again");
       console.log("Error adding product");
